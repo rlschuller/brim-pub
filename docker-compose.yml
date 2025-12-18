@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  brim:
+    build: .
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./lib:/app/lib
+      - ./images:/app/images
+      - ./src:/app/src
+    shm_size: '4gb'
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+

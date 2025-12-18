@@ -1,0 +1,13 @@
+{
+    "include": [
+        "src"
+    ],
+    "ignore": [
+        "data",
+        "doc",
+        "images",
+        "logs",
+        "models",
+        "runs",
+    ]
+}

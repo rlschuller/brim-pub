@@ -1,0 +1,54 @@
+#!/bin/bash
+
+echohelp() { 
+    echo "Usage: md5dir <dir> [--stdout]" 1>&2
+    echo "Compute md5 for each file and write the output in <dir>.md5" 1>&2
+    exit 1
+}
+
+echohelp2() { 
+    echo "Error: invalid 2nd argument." 1>&2
+    echohelp
+}
+
+echohelp3() { 
+    echo "Error: unexpected 3nd argument." 1>&2
+    echohelp
+}
+
+errFileExists() { 
+    echo Error: "$1" exists! 1>&2
+    exit 2
+}
+
+errDirDoesntExist() { 
+    echo Error: directory "$1" does not exist! 1>&2
+    exit 3
+}
+
+[ -z "$1" ] && echohelp
+[ -z "$3" ] || echohelp3
+[ -n "$2" ] && [ "$2" != "--stdout" ] && echohelp2
+[ -d "$1" ] || errDirDoesntExist "$1"
+
+cd "$1" || exit 1
+DIRNAME=$( basename "$1" )
+
+if [ "$2" = "--stdout" ]; then
+    shopt -s globstar
+    for i in **
+    do 
+        [[ -f "$i" ]] && md5sum "$i"
+    done
+    shopt -u globstar
+else
+
+    [ -f "../$DIRNAME.md5" ] && errFileExists "$( realpath "../$DIRNAME.md5" )"
+
+    shopt -s globstar
+    for i in **
+    do 
+        [[ -f "$i" ]] && md5sum "$i" >> ../"$DIRNAME".md5
+    done
+    shopt -u globstar
+fi

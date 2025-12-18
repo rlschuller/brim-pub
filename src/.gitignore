@@ -1,0 +1,8 @@
+*.nrrd
+*.json
+*.png
+/logs
+/runs
+*.ipynb
+*.npy
+*.txt

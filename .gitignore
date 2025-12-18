@@ -1,0 +1,14 @@
+/personal
+/venv
+/.git
+/data
+/bin
+/tmp
+/lib
+/articles
+/models
+#*.nrrd
+__pycache__
+/tumor_figures
+/logs
+/runs
